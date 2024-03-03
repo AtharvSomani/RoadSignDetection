@@ -30,8 +30,8 @@ def translate_descriptions(description, dest_langs):
         translations[dest_lang] = translated.text
     return translations
 
-# Define a function to handle the button click event
-def on_select_image():
+# Define a function to update the description based on the selected image
+def update_description():
     file_path = filedialog.askopenfilename(title='Select an image', filetypes=[('Image files', '*.jpg *.jpeg *.png')])
     if file_path:
         image = preprocess_image(file_path)
@@ -48,14 +48,28 @@ def on_select_image():
 root = tk.Tk()
 root.title("Road Sign Detection")
 
-# Create a button to select an image
-select_button = tk.Button(root, text="Select Image", command=on_select_image)
-select_button.pack(pady=20)
+# Create a frame for better layout
+frame = tk.Frame(root, padx=20, pady=20)
+frame.pack()
 
-# Create a label to display the description
+# Create a label for the project description
 description_text = tk.StringVar()
-description_label = tk.Label(root, textvariable=description_text, wraplength=400)
-description_label.pack(padx=20, pady=10)
+description_label = tk.Label(frame, textvariable=description_text, wraplength=400)
+description_label.pack(pady=10)
+
+# Create an "About" section label
+about_label = tk.Label(frame, text="About:", font=("Helvetica", 16, "bold"))
+about_label.pack(pady=5)
+
+# Create a label for the about section
+about_text = """This application uses a Convolutional Neural Network (CNN) to detect road signs. 
+It predicts the description of the detected road sign and provides translations in multiple languages."""
+about_text_label = tk.Label(frame, text=about_text, wraplength=400, justify="left")
+about_text_label.pack(pady=10)
+
+# Create a button to select an image and update the description
+select_button = tk.Button(frame, text="Select Image", command=update_description)
+select_button.pack(pady=10)
 
 # Start the Tkinter event loop
 root.mainloop()
